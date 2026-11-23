@@ -112,6 +112,8 @@ p{margin:0;text-wrap:pretty}
 .menu-chips a:hover{background:var(--nero);color:var(--giallo)}
 .menu-cat{scroll-margin-top:150px;margin-top:64px}
 .menu-cat:first-child{margin-top:0}
+.menu-sub{margin:-12px 0 24px;color:var(--grigio);font-size:17px}
+.menu-sub a,.section-nero .testo a{font-weight:600;text-underline-offset:3px}
 .menu-nota{text-align:center;margin:56px auto 0;max-width:60ch;color:var(--grigio)}
 
 /* Recensioni */
