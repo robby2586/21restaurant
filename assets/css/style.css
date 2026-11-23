@@ -184,3 +184,7 @@ p{margin:0;text-wrap:pretty}
   .menu-chips a{padding:0 14px;font-size:14px}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+
+/* Cinese: font di sistema per i caratteri CJK */
+:lang(zh) body,:lang(zh-Hans) body{font-family:"Nunito Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;font-weight:400}
+html:lang(zh-Hans) h1,html:lang(zh-Hans) h2,html:lang(zh-Hans) h3{font-family:"Rozha One","Songti SC","Noto Serif SC","SimSun",serif;font-weight:700}
