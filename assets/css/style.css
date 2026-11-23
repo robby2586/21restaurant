@@ -106,6 +106,10 @@ p{margin:0;text-wrap:pretty}
 .piatto{margin:0;background:var(--bianco);border:1px solid var(--bordo)}
 .piatto img{width:100%;aspect-ratio:4/3;object-fit:cover}
 .piatto figcaption{font-family:"Rozha One",Georgia,serif;font-size:20px;line-height:1.25;padding:16px 18px 18px}
+.menu-app{background:var(--giallo)}
+.menu-app-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px;padding-top:28px;padding-bottom:28px}
+.menu-app h2{font-size:28px;margin-bottom:4px}
+.menu-app p{max-width:60ch;font-weight:400}
 .menu-chips{background:var(--crema);border-bottom:1px solid var(--bordo);position:sticky;top:67px;z-index:40}
 .menu-chips .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding-top:14px;padding-bottom:14px}
 .menu-chips a{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border:1.5px solid var(--nero);border-radius:999px;text-decoration:none;font-weight:600;font-size:15px}
