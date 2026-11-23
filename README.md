@@ -18,7 +18,7 @@ Gli indirizzi sono gli stessi del sito Wix, quindi i QR code già stampati (es. 
 ## Cose da completare
 
 - **Foto**: sono in `assets/foto/`. Per cambiarne una, sostituisci il file tenendo lo stesso nome e le stesse proporzioni (hero 1920×1078, chi-siamo/delivery/eventi 4:3, card-* 3:2, galleria-* 3:4).
-- **Menu**: le foto dei piatti sono in `assets/menu/` (formato 4:3, 800×600). Per aggiungere o togliere un piatto modifica le tre pagine `menucompleto/index.html` (o chiedimelo e rigenero il sito).
+- **Menu**: la pagina Menu (`menucompleto/`, in IT/FR/EN) è il menu interattivo con prezzi, ingredienti e allergeni; le foto dei piatti sono in `menu/img/`. Per modificare piatti o prezzi chiedimelo e rigenero le tre pagine.
 - **Avviso chiusura natalizia**: dopo il 28 dicembre elimina, nelle tre home (`index.html`, `fr/index.html`, `en/index.html`), il blocco tra `<!-- AVVISO TEMPORANEO` e `<!-- FINE AVVISO -->`.
 - **Colori**: si cambiano in cima a `assets/css/style.css`.
 
