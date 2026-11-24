@@ -17,12 +17,12 @@
 <meta property="og:title" content="Menu | Al 21 Restaurant">
 <meta property="og:description" content="Ristorante italiano, lounge e wine bar nel centro di Lussemburgo: pasta fresca senza conservanti, pizza, eventi privati. Prenota il tuo tavolo.">
 <meta property="og:url" content="https://www.21restaurant.com/menucompleto/">
-<meta property="og:image" content="https://www.21restaurant.com/assets/img/og-image.jpg?v=1795514974">
+<meta property="og:image" content="https://www.21restaurant.com/assets/img/og-image.jpg?v=1795515238">
 <meta name="theme-color" content="#1C1C1C">
 <link rel="icon" href="../favicon.ico" sizes="any">
-<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=1795514974">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png?v=1795515238">
 <link rel="preload" href="../assets/fonts/rozha-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../assets/css/style.css?v=1795514974">
+<link rel="stylesheet" href="../assets/css/style.css?v=1795515238">
 <script>document.documentElement.classList.add('js')</script>
 
 <style>
@@ -412,6 +412,15 @@ a{ color:inherit; }
 .sheet .btn{ text-transform:none; min-height:0; display:block; transition:none; }
 .sheet .btn:hover{ transform:none; }
 @media (max-width:860px){ .hdr{ top:63px; } }
+/* barra delle categorie */
+.catnav{ display:flex; gap:6px; overflow-x:auto; margin:0 -20px; padding:2px 20px 2px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+.catnav::-webkit-scrollbar{ display:none; }
+.catnav:empty{ display:none; }
+.cat-chip{ flex:none; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); border-radius:999px; padding:7px 13px; font:700 0.74rem/1.2 'Nunito Sans',system-ui,sans-serif; letter-spacing:0.04em; white-space:nowrap; cursor:pointer; }
+.cat-chip:hover{ border-color:#1C1C1C; }
+.cat-chip[aria-current="true"]{ background:#1C1C1C; border-color:#1C1C1C; color:#F7C64B; }
+.cat-chip:focus-visible{ outline:none; box-shadow:var(--focus); }
+@media (min-width:861px){ .catnav{ flex-wrap:wrap; overflow:visible; margin:0; padding:0; } }
 :lang(zh) .dish-name, :lang(zh) .section-title{ font-family:'Rozha One','Songti SC','Noto Serif SC',serif; }
 
 </style>
@@ -420,7 +429,7 @@ a{ color:inherit; }
 <a class="skip" href="#contenuto">Vai al contenuto</a>
 <header class="site-header">
 <div class="barra">
-<a class="simbolo" href="../"><img src="../assets/img/simbolo.svg?v=1795514974" alt="Al 21 Restaurant – Home" width="129" height="120"></a>
+<a class="simbolo" href="../"><img src="../assets/img/simbolo.svg?v=1795515238" alt="Al 21 Restaurant – Home" width="129" height="120"></a>
 <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-principale">Menu<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
 <nav class="nav" aria-label="Pagine">
 <ul id="menu-principale">
@@ -548,6 +557,7 @@ a{ color:inherit; }
       </button>
       <span class="results-meta" id="results-meta"></span>
     </div>
+    <nav class="catnav" id="catnav" aria-label="Menu"></nav>
   </header>
 
   <main class="main" id="main"></main>
@@ -694,6 +704,45 @@ function render(){
   renderMain();
   renderSheet();
 }
+
+
+function hdrBottom(){
+  var h = document.querySelector('.hdr');
+  return (parseFloat(getComputedStyle(h).top) || 0) + h.offsetHeight;
+}
+function renderCatnav(){
+  var nav = document.getElementById('catnav');
+  nav.innerHTML = '';
+  document.querySelectorAll('#main .section').forEach(function(sec){
+    var t = sec.querySelector('.section-title');
+    var b = el('button',{class:'cat-chip',type:'button','data-target':sec.id,text:t ? t.textContent : ''});
+    b.addEventListener('click', function(){
+      var si = parseInt(sec.id.replace('sez-',''), 10);
+      if(sec.getAttribute('data-open') !== 'true'){ state.openSections[si] = true; renderMain(); }
+      var target = document.getElementById('sez-' + si);
+      var y = target.getBoundingClientRect().top + window.pageYOffset - hdrBottom() - 8;
+      window.scrollTo({top: y, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+    });
+    nav.appendChild(b);
+  });
+  updateCatnav();
+}
+function updateCatnav(){
+  var nav = document.getElementById('catnav'); if(!nav) return;
+  var limit = hdrBottom() + 24, current = null;
+  document.querySelectorAll('#main .section').forEach(function(sec){
+    if(sec.getBoundingClientRect().top <= limit) current = sec.id;
+  });
+  if(!current){ var f = document.querySelector('#main .section'); current = f ? f.id : null; }
+  nav.querySelectorAll('.cat-chip').forEach(function(b){
+    var on = b.getAttribute('data-target') === current;
+    if(on && b.getAttribute('aria-current') !== 'true'){
+      nav.scrollTo({left: b.offsetLeft - 20, behavior: 'smooth'});
+    }
+    b.setAttribute('aria-current', on ? 'true' : 'false');
+  });
+}
+window.addEventListener('scroll', function(){ updateCatnav(); }, {passive:true});
 
 function renderHeader(){
   var u = ui();
@@ -928,7 +977,7 @@ function renderMain(){
       innerD.appendChild(drinksWrap);
       bodyD.appendChild(innerD);
       secElD.appendChild(bodyD);
-      main.appendChild(secElD);
+      secElD.id = 'sez-' + si; main.appendChild(secElD);
       return;
     }
 
@@ -977,7 +1026,7 @@ function renderMain(){
     }
     body.appendChild(inner);
     secEl.appendChild(body);
-    main.appendChild(secEl);
+    secEl.id = 'sez-' + si; main.appendChild(secEl);
   });
 
   if(totalShown === 0){
@@ -992,6 +1041,7 @@ function renderMain(){
   metaEl.textContent = totalShown + ' ' + label + (totalHidden ? ' · ' + totalHidden + ' ' + u.hiddenNotice : '');
 
   document.getElementById('ftr-note').textContent = u.footerNote;
+  renderCatnav();
 }
 
 function renderSheet(){
@@ -1067,6 +1117,6 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 
 
-<script src="../assets/js/main.js?v=1795514974"></script>
+<script src="../assets/js/main.js?v=1795515238"></script>
 </body>
 </html>
